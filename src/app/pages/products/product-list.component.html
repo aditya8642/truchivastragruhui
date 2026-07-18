@@ -1,0 +1,49 @@
+<div class="container list-page">
+  <section class="listing">
+    <div class="search-row">
+      <input
+        type="text"
+        placeholder="Search products…"
+        [(ngModel)]="searchTerm"
+        (keyup.enter)="onSearch()"
+      />
+      <button (click)="onSearch()">Search</button>
+    </div>
+
+    @if (loading()) {
+      <p>Loading…</p>
+    } @else if (page() && page()!.content.length > 0) {
+      <div class="product-grid">
+        @for (product of page()!.content; track product.id) {
+          <div class="product-card card">
+            <a [routerLink]="['/products', product.id]" class="product-image-link">
+              <img [src]="primaryImage(product)" [alt]="product.name" class="product-image" />
+            </a>
+            <div class="product-info">
+              <span class="product-category">{{ product.category.name }}</span>
+              <a [routerLink]="['/products', product.id]" class="product-name">{{ product.name }}</a>
+              <span class="product-price">&#8377;{{ product.price }}</span>
+              <button class="btn-outline add-btn" (click)="cart.add(product)" [disabled]="product.stock <= 0">
+                {{ product.stock > 0 ? 'Add to bag' : 'Sold out' }}
+              </button>
+            </div>
+          </div>
+        }
+      </div>
+
+      @if (page()!.totalPages > 1) {
+        <div class="pagination">
+          @for (n of [].constructor(page()!.totalPages); track $index) {
+            <button
+              class="page-btn"
+              [class.active]="$index === currentPage"
+              (click)="goToPage($index)"
+            >{{ $index + 1 }}</button>
+          }
+        </div>
+      }
+    } @else {
+      <p>No products found.</p>
+    }
+  </section>
+</div>

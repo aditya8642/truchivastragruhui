@@ -1,0 +1,4 @@
+.form-page { padding: var(--space-6) var(--space-5) var(--space-8); max-width: 560px; margin: 0 auto; }
+.form-card { padding: var(--space-6); margin-top: var(--space-4); }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); }
+.success-text { color: var(--color-success); font-size: 0.85rem; margin-top: var(--space-1); }

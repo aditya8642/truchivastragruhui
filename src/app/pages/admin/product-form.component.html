@@ -1,0 +1,49 @@
+<div class="container form-page">
+  <span class="eyebrow">Admin</span>
+  <h1>Add a product</h1>
+
+  <form (ngSubmit)="submit()" class="card form-card">
+    <div class="field">
+      <label for="name">Name</label>
+      <input id="name" name="name" [(ngModel)]="name" required />
+    </div>
+
+    <div class="field">
+      <label for="description">Description</label>
+      <textarea id="description" name="description" rows="4" [(ngModel)]="description"></textarea>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label for="price">Price (&#8377;)</label>
+        <input id="price" type="number" name="price" [(ngModel)]="price" required />
+      </div>
+      <div class="field">
+        <label for="stock">Stock</label>
+        <input id="stock" type="number" name="stock" [(ngModel)]="stock" />
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="category">Category</label>
+      <select id="category" name="category" [(ngModel)]="categoryId" required>
+        <option [value]="null" disabled>Select a category</option>
+        @for (cat of categories(); track cat.id) {
+          <option [value]="cat.id">{{ cat.name }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="field">
+      <label for="image">Product image</label>
+      <input id="image" type="file" accept="image/*" (change)="onFileSelected($event)" />
+    </div>
+
+    @if (errorMessage()) { <p class="error-text">{{ errorMessage() }}</p> }
+    @if (message()) { <p class="success-text">{{ message() }}</p> }
+
+    <button type="submit" class="btn" [disabled]="saving()">
+      {{ saving() ? 'Saving…' : 'Save product' }}
+    </button>
+  </form>
+</div>

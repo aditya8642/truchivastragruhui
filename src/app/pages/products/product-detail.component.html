@@ -1,0 +1,45 @@
+@if (loading()) {
+  <div class="container"><p>Loading…</p></div>
+} @else {
+  @if (product(); as p) {
+    <div class="container detail-page">
+      <div class="gallery">
+        <img [src]="images()[activeImage()]" [alt]="p.name" class="main-image" />
+        @if (images().length > 1) {
+          <div class="thumbs">
+            @for (img of images(); track $index) {
+              <button class="thumb-btn" [class.active]="$index === activeImage()" (click)="activeImage.set($index)">
+                <img [src]="img" [alt]="p.name + ' view ' + ($index + 1)" />
+              </button>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="info">
+        <span class="eyebrow">{{ p.category.name }}</span>
+        <h1>{{ p.name }}</h1>
+        <p class="price">&#8377;{{ p.price }}</p>
+        <p class="description">{{ p.description }}</p>
+
+        @if (p.stock > 0) {
+          <div class="qty-row">
+            <label>Quantity</label>
+            <div class="qty-control">
+              <button (click)="decrement()">&minus;</button>
+              <span>{{ quantity() }}</span>
+              <button (click)="increment()">+</button>
+            </div>
+          </div>
+          <button class="btn add-to-bag" (click)="addToCart()">Add to bag</button>
+        } @else {
+          <button class="btn" disabled>Sold out</button>
+        }
+
+        <a routerLink="/products" class="back-link">&larr; Back to the edit</a>
+      </div>
+    </div>
+  } @else {
+    <div class="container"><p>Product not found.</p></div>
+  }
+}

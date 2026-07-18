@@ -1,0 +1,42 @@
+<div class="container cart-page">
+  <h1>Your bag</h1>
+
+  @if (cart.items().length === 0) {
+    <p class="empty-state">Your bag is empty. <a routerLink="/products">Start shopping &rarr;</a></p>
+  } @else {
+    <div class="cart-layout">
+      <div class="cart-lines">
+        @for (line of cart.items(); track line.product.id) {
+          <div class="cart-line card">
+            <img
+              [src]="line.product.productImage?.[0]?.imageUrl ?? line.product.productImages?.[0]?.imageUrl ?? 'https://placehold.co/160x200/FAF7F0/201C18?text=Vastragruh'"
+              [alt]="line.product.name"
+              class="line-image"
+            />
+            <div class="line-info">
+              <a [routerLink]="['/products', line.product.id]" class="line-name">{{ line.product.name }}</a>
+              <span class="line-price">&#8377;{{ line.product.price }}</span>
+
+              <div class="line-qty">
+                <button (click)="cart.updateQuantity(line.product.id, line.quantity - 1)">&minus;</button>
+                <span>{{ line.quantity }}</span>
+                <button (click)="cart.updateQuantity(line.product.id, line.quantity + 1)">+</button>
+              </div>
+            </div>
+            <button class="remove-btn" (click)="cart.remove(line.product.id)">Remove</button>
+          </div>
+        }
+      </div>
+
+      <div class="cart-summary card">
+        <h3>Order summary</h3>
+        <div class="summary-row">
+          <span>Subtotal</span>
+          <span>&#8377;{{ cart.subtotal() }}</span>
+        </div>
+        <p class="summary-note">Shipping and taxes calculated at checkout.</p>
+        <button class="btn full-width" (click)="checkout()">Proceed to checkout</button>
+      </div>
+    </div>
+  }
+</div>

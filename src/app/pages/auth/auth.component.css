@@ -1,0 +1,30 @@
+.auth-page {
+  display: flex;
+  justify-content: center;
+  padding: var(--space-8) var(--space-5);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 420px;
+  padding: var(--space-6);
+}
+
+.auth-card h1 { margin-top: var(--space-1); }
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+.full-width { width: 100%; margin-top: var(--space-3); }
+
+.success-text { color: var(--color-success); font-size: 0.85rem; margin-top: var(--space-1); }
+
+.switch-link {
+  margin-top: var(--space-5);
+  font-size: 0.85rem;
+  text-align: center;
+}
+.switch-link a { color: var(--color-oxblood); font-weight: 600; }

@@ -1,0 +1,36 @@
+<header class="navbar">
+  <div class="container navbar-inner">
+    <a routerLink="/products" class="wordmark">
+      <img src="https://res.cloudinary.com/wvc3u0wy/image/upload/v1784371975/fashion-store/abgcjnn66anffnnyksi4.jpg" alt="Vastragruh logo" />
+    </a>
+
+    <nav class="nav-links">
+      <a routerLink="/products" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">All</a>
+      @for (category of categories(); track category.id) {
+        <a
+          [routerLink]="['/products']"
+          [queryParams]="{ category: category.id }"
+          routerLinkActive="active"
+        >
+          {{ category.name }}
+        </a>
+      }
+    </nav>
+
+    <div class="nav-actions">
+      @if (auth.currentUser(); as user) {
+        <span class="user-greeting">{{ user.email }}</span>
+        <button class="btn-outline" (click)="logout()">Log out</button>
+      } @else {
+        <a routerLink="/login" class="btn-outline">Log in</a>
+      }
+
+      <a routerLink="/cart" class="cart-link">
+        Cart
+        @if (cart.itemCount() > 0) {
+          <span class="cart-count">{{ cart.itemCount() }}</span>
+        }
+      </a>
+    </div>
+  </div>
+</header>

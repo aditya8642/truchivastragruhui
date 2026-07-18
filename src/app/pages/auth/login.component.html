@@ -1,0 +1,27 @@
+<div class="container auth-page">
+  <div class="auth-card card">
+    <span class="eyebrow">Welcome back</span>
+    <h1>Log in</h1>
+
+    <form (ngSubmit)="submit()">
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" type="email" name="email" [(ngModel)]="email" required />
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input id="password" type="password" name="password" [(ngModel)]="password" required />
+      </div>
+
+      @if (errorMessage()) {
+        <p class="error-text">{{ errorMessage() }}</p>
+      }
+
+      <button type="submit" class="btn full-width" [disabled]="loading()">
+        {{ loading() ? 'Logging in…' : 'Log in' }}
+      </button>
+    </form>
+
+    <p class="switch-link">New here? <a routerLink="/register">Create an account</a></p>
+  </div>
+</div>

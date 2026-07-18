@@ -1,0 +1,43 @@
+.cart-page { padding: var(--space-6) var(--space-5) var(--space-8); }
+
+.empty-state { padding: var(--space-6) 0; }
+.empty-state a { color: var(--color-oxblood); font-weight: 600; }
+
+.cart-layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+.cart-lines { display: flex; flex-direction: column; gap: var(--space-3); }
+
+.cart-line {
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  gap: var(--space-4);
+  align-items: center;
+  padding: var(--space-3);
+}
+
+.line-image { width: 80px; height: 100px; object-fit: cover; border-radius: var(--radius-sm); }
+
+.line-info { display: flex; flex-direction: column; gap: 4px; }
+.line-name { font-weight: 600; }
+.line-price { color: var(--color-ink-soft); font-size: 0.9rem; }
+
+.line-qty { display: flex; align-items: center; gap: var(--space-2); margin-top: var(--space-1); }
+.line-qty button { background: none; border: 1px solid var(--color-line); color: var(--color-ink); width: 28px; height: 28px; padding: 0; }
+.line-qty span { min-width: 20px; text-align: center; }
+
+.remove-btn { background: none; border: none; color: var(--color-ink-soft); font-size: 0.8rem; text-decoration: underline; }
+.remove-btn:hover { color: var(--color-error); }
+
+.cart-summary { padding: var(--space-5); position: sticky; top: 90px; }
+.summary-row { display: flex; justify-content: space-between; margin: var(--space-3) 0; font-weight: 600; }
+.summary-note { font-size: 0.78rem; margin-bottom: var(--space-4); }
+.full-width { width: 100%; }
+
+@media (max-width: 720px) {
+  .cart-layout { grid-template-columns: 1fr; }
+}
