@@ -41,3 +41,12 @@
 @media (max-width: 720px) {
   .cart-layout { grid-template-columns: 1fr; }
 }
+
+@media (max-width: 480px) {
+  .cart-line {
+    grid-template-columns: 64px 1fr;
+    grid-template-rows: auto auto;
+  }
+  .remove-btn { grid-column: 2; justify-self: start; }
+  .line-image { width: 64px; height: 80px; }
+}
