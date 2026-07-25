@@ -19,6 +19,11 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/order-confirmation/order-confirmation.component').then(m => m.OrderConfirmationComponent)
   },
   {
+    path: 'orders',
+    canActivate: [authGuard],
+    loadComponent: () => import('./pages/orders/orders.component').then(m => m.OrdersComponent)
+  },
+  {
     path: 'admin/products/new',
     canActivate: [authGuard],
     loadComponent: () => import('./pages/admin/product-form.component').then(m => m.ProductFormComponent)

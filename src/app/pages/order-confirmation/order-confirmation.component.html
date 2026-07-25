@@ -18,7 +18,10 @@
           <h3>Items</h3>
           @for (item of o.items; track item.productId) {
             <div class="detail-line">
-              <span>{{ item.name }} &times; {{ item.quantity }}</span>
+              <a [routerLink]="['/products', item.productId]" class="order-item-link">
+                <span>{{ item.name }}</span>
+                <span>&times; {{ item.quantity }}</span>
+              </a>
               <span>&#8377;{{ item.price * item.quantity }}</span>
             </div>
           }

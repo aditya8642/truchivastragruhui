@@ -18,7 +18,7 @@ export class OrderConfirmationComponent implements OnInit {
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('orderId') ?? '';
-    this.order.set(this.orderService.getByIdLocal(id));
+    this.orderService.getById(id).subscribe({ next: (o) => this.order.set(o), error: () => this.order.set(this.orderService.getByIdLocal(id)) });
   }
 
   paymentLabel(method: string): string {

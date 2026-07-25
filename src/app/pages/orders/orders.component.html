@@ -1,0 +1,38 @@
+<div class="container orders-page">
+  <h1>My Orders</h1>
+
+  @if (orders().length === 0) {
+    <div class="empty-state card">
+      <p>You have no orders yet.</p>
+      <a routerLink="/products" class="btn">Browse products</a>
+    </div>
+  } @else {
+    <div class="orders-list">
+      @for (order of orders(); track order.orderId) {
+        <article class="order-card card">
+          <div class="order-header">
+            <div>
+              <p class="order-label">Order #{{ order.orderId }}</p>
+              <p class="order-status">{{ statusLabel(order) }}</p>
+            </div>
+            <a [routerLink]="['/order-confirmation', order.orderId]" class="view-link">View details</a>
+          </div>
+
+          <div class="order-summary">
+            @for (item of order.items; track item.productId) {
+              <a [routerLink]="['/products', item.productId]" class="order-item">
+                <span>{{ item.name }}</span>
+                <span>&times; {{ item.quantity }}</span>
+              </a>
+            }
+          </div>
+
+          <div class="order-totals">
+            <span>Total</span>
+            <strong>&#8377;{{ order.totalAmount }}</strong>
+          </div>
+        </article>
+      }
+    </div>
+  }
+</div>

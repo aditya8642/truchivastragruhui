@@ -17,4 +17,7 @@ export interface LoginRequest {
 
 export interface AuthenticationResponse {
   token: string;
+  // Optional user object returned by the backend along with the token
+  // backend may return either a string username or an object
+  loggedinUser?: string;
 }

@@ -15,6 +15,7 @@ import { Category } from '../../core/models/category.model';
 })
 export class NavbarComponent implements OnInit {
   categories = signal<Category[]>([]);
+  dropdownOpen = signal(false);
 
   constructor(
     public auth: AuthService,
@@ -34,5 +35,14 @@ export class NavbarComponent implements OnInit {
     this.auth.logout();
     this.cart.clear();
     this.router.navigate(['/login']);
+  }
+
+  toggleDropdown(event?: Event): void {
+    if (event) { event.stopPropagation(); }
+    this.dropdownOpen.update(v => !v);
+  }
+
+  closeDropdown(): void {
+    this.dropdownOpen.set(false);
   }
 }

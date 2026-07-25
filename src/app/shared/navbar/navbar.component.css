@@ -91,14 +91,58 @@
   transform: translateY(-1px);
 }
 
+.user-area { display: inline-flex; align-items: center; gap: 0.75rem; }
+
 .user-greeting {
-  font-size: 0.8rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
   color: var(--color-ink-soft);
-  /* Long emails shouldn't push the cart button off-screen on a phone */
-  max-width: 160px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+}
+
+.avatar {
+  display: inline-grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--color-oxblood);
+  color: var(--color-paper);
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.avatar-wrapper { position: relative; display: inline-flex; align-items: center; gap: 0.35rem; cursor: pointer; }
+.avatar-caret { font-size: 0.7rem; color: var(--color-ink-soft); }
+
+.avatar-dropdown {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 10px);
+  background: var(--color-paper);
+  border: 1px solid var(--color-line);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  border-radius: 8px;
+  min-width: 160px;
+  padding: 0.35rem 0.25rem;
+  display: none;
+  z-index: 40;
+}
+.avatar-dropdown.open { display: block; }
+.dropdown-item { display: block; padding: 0.6rem 0.9rem; text-align: left; background: transparent; border: none; width: 100%; color: var(--color-ink); text-decoration: none; }
+.dropdown-item:hover { background: rgba(0,0,0,0.04); }
+
+.greeting-text { display: flex; flex-direction: column; line-height: 1; }
+.welcome { font-size: 0.68rem; text-transform: uppercase; color: var(--color-ink-soft); letter-spacing: 0.06em; }
+.user-name { font-weight: 700; color: var(--color-oxblood); font-size: 0.95rem; }
+
+.logout-btn { padding: 0.45rem 0.8rem; }
+
+@media (max-width: 520px) {
+  .greeting-text .welcome { display: none; }
+  .user-name { font-size: 0.86rem; }
+  .avatar { width: 28px; height: 28px; font-size: 0.8rem; }
+  .user-area { gap: 0.5rem; }
 }
 
 /* Cart button rebuilt as a flex row instead of absolute-positioned badge -

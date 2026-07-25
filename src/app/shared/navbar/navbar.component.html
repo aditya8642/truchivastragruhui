@@ -19,8 +19,24 @@
 
     <div class="nav-actions">
       @if (auth.currentUser(); as user) {
-        <span class="user-greeting">{{ user.email }}</span>
-        <button class="btn-outline" (click)="logout()">Log out</button>
+        <div class="user-area">
+          <a routerLink="/orders" class="btn-outline">My orders</a>
+
+            <div class="user-greeting" aria-live="polite">
+              <div class="avatar-wrapper" (click)="toggleDropdown($event)" tabindex="0" (blur)="closeDropdown()">
+                <span class="avatar" title="{{ auth.displayName() }}" aria-hidden="true">{{ auth.displayName() | slice:0:1 | uppercase }}</span>
+                <div class="avatar-caret" aria-hidden="true">▾</div>
+
+                <div class="avatar-dropdown" [class.open]="dropdownOpen()" role="menu" *if="dropdownOpen()">
+                  <a class="dropdown-item" routerLink="/profile" (click)="closeDropdown()">Profile</a>
+                  <a class="dropdown-item" routerLink="/orders" (click)="closeDropdown()">Orders</a>
+                  <button class="dropdown-item" (click)="logout()">Logout</button>
+                </div>
+              </div>
+            </div>
+
+          <button class="btn-outline logout-btn" (click)="logout()">Log out</button>
+        </div>
       } @else {
         <a routerLink="/login" class="btn-outline">Log in</a>
       }

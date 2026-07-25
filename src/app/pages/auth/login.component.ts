@@ -26,10 +26,13 @@ export class LoginComponent {
   submit(): void {
     this.errorMessage.set('');
     this.loading.set(true);
-    const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/cart';
+    const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl') || '/products';
 
     this.authService.login({ email: this.email, password: this.password }).subscribe({
-      next: () => { this.loading.set(false); this.router.navigate([returnUrl]); },
+      next: () => {
+        this.loading.set(false);
+        this.router.navigate([returnUrl]);
+      },
       error: (err) => {
         this.loading.set(false);
         this.errorMessage.set(err?.error?.message ?? 'Invalid email or password.');

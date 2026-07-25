@@ -31,4 +31,7 @@ export interface StoredOrder extends Omit<PlaceOrderPayload, 'orderId'> {
   // false when the backend call failed and this order only exists locally -
   // surfaced on the confirmation page so nothing is silently misleading.
   backendConfirmed: boolean;
+  // Optional status + estimated delivery when provided by backend
+  status?: string;
+  estimatedDeliveryDate?: string;
 }
