@@ -31,12 +31,12 @@
               <button (click)="increment()">+</button>
             </div>
           </div>
-          <button class="btn add-to-bag" (click)="addToCart()">Add to bag</button>
+          <button class="btn add-to-bag" (click)="addToCart()">Add {{ quantity() }} to cart</button>
         } @else {
           <button class="btn" disabled>Sold out</button>
         }
-
-        <a routerLink="/products" class="back-link">&larr; Back to the edit</a>
+<br>
+        <a routerLink="/products" class="back-link">Continue shopping</a>
       </div>
     </div>
   } @else {

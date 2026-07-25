@@ -22,6 +22,11 @@ export class ProductDetailComponent implements OnInit {
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
+    const existing = this.cart.items().find(line => line.product.id === id);
+    if (existing) {
+      this.quantity.set(existing.quantity);
+    }
+
     this.productService.getById(id).subscribe({
       next: p => { this.product.set(p); this.loading.set(false); },
       error: () => this.loading.set(false)
@@ -34,7 +39,14 @@ export class ProductDetailComponent implements OnInit {
 
   addToCart(): void {
     const p = this.product();
-    if (p) this.cart.add(p, this.quantity());
+    if (!p) return;
+
+    const existing = this.cart.items().find(line => line.product.id === p.id);
+    if (existing) {
+      this.cart.updateQuantity(p.id, this.quantity());
+    } else {
+      this.cart.add(p, this.quantity());
+    }
   }
 
   increment(): void { this.quantity.update(q => q + 1); }

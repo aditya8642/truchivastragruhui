@@ -9,6 +9,16 @@ export const routes: Routes = [
   { path: 'register', loadComponent: () => import('./pages/auth/register.component').then(m => m.RegisterComponent) },
   { path: 'cart', loadComponent: () => import('./pages/cart/cart.component').then(m => m.CartComponent) },
   {
+    path: 'checkout',
+    canActivate: [authGuard],
+    loadComponent: () => import('./pages/checkout/checkout.component').then(m => m.CheckoutComponent)
+  },
+  {
+    path: 'order-confirmation/:orderId',
+    canActivate: [authGuard],
+    loadComponent: () => import('./pages/order-confirmation/order-confirmation.component').then(m => m.OrderConfirmationComponent)
+  },
+  {
     path: 'admin/products/new',
     canActivate: [authGuard],
     loadComponent: () => import('./pages/admin/product-form.component').then(m => m.ProductFormComponent)

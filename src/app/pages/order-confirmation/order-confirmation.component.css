@@ -1,0 +1,68 @@
+.confirmation-page {
+  padding: var(--space-7) var(--space-5) var(--space-8);
+  display: flex;
+  justify-content: center;
+}
+
+.confirmation-card {
+  width: 100%;
+  max-width: 560px;
+  padding: var(--space-7) var(--space-6);
+  text-align: center;
+}
+
+.success-icon {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto var(--space-4);
+  border-radius: 50%;
+  background: var(--color-success);
+  color: var(--color-paper);
+  font-size: 1.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.order-id { font-size: 1.05rem; margin: var(--space-2) 0 var(--space-5); }
+
+.sync-note {
+  font-size: 0.85rem;
+  background: #FBF3E4;
+  border: 1px solid var(--color-gold);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.order-details {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  margin-bottom: var(--space-6);
+}
+
+.detail-block h3 {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-ink-soft);
+  margin-bottom: var(--space-2);
+}
+
+.detail-line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  margin-bottom: var(--space-1);
+}
+
+.total-line {
+  font-weight: 700;
+  margin-top: var(--space-2);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--color-line);
+}
+
+.continue-btn { display: inline-block; }

@@ -1,0 +1,170 @@
+<div class="container checkout-page">
+  <h1>Checkout</h1>
+
+  <div class="checkout-layout">
+    <div class="checkout-main">
+
+      <!-- STEP 1: Address -->
+      <section class="card step-card">
+        <div class="step-header">
+          <h2>1. Delivery Address</h2>
+          @if (step() === 'payment') {
+            <button type="button" class="link-btn" (click)="backToAddress()">Change</button>
+          }
+        </div>
+
+        @if (step() === 'address') {
+          @if (!showAddressForm()) {
+            <div class="address-list">
+              @for (addr of addresses(); track addr.id) {
+                <label class="address-card" [class.selected]="selectedAddressId() === addr.id">
+                  <input
+                    type="radio"
+                    name="address"
+                    [checked]="selectedAddressId() === addr.id"
+                    (change)="selectAddress(addr.id)"
+                  />
+                  <div class="address-body">
+                    <span class="address-type">{{ addr.type }}</span>
+                    <strong>{{ addr.fullName }}</strong>
+                    <span>{{ addr.line1 }}{{ addr.line2 ? ', ' + addr.line2 : '' }}</span>
+                    <span>{{ addr.city }}, {{ addr.state }} - {{ addr.pincode }}</span>
+                    <span>Phone: {{ addr.phone }}</span>
+                  </div>
+                </label>
+              }
+            </div>
+
+            <button type="button" class="btn-outline add-address-btn" (click)="addNewAddress()">
+              + Add a new address
+            </button>
+
+            @if (formError()) { <p class="error-text">{{ formError() }}</p> }
+
+            <button type="button" class="btn proceed-btn" (click)="proceedToPayment()">
+              Proceed to checkout
+            </button>
+          } @else {
+            <form class="address-form" (ngSubmit)="saveAddress()">
+              <div class="field">
+                <label for="fullName">Full name</label>
+                <input id="fullName" name="fullName" [(ngModel)]="formFullName" required />
+              </div>
+
+              <div class="field">
+                <label for="phone">Phone</label>
+                <input id="phone" name="phone" [(ngModel)]="formPhone" placeholder="10-digit number starting 6-9" required />
+              </div>
+
+              <div class="field">
+                <label for="line1">Address line 1</label>
+                <input id="line1" name="line1" [(ngModel)]="formLine1" required />
+              </div>
+
+              <div class="field">
+                <label for="line2">Address line 2 (optional)</label>
+                <input id="line2" name="line2" [(ngModel)]="formLine2" />
+              </div>
+
+              <div class="field-row">
+                <div class="field">
+                  <label for="city">City</label>
+                  <input id="city" name="city" [(ngModel)]="formCity" required />
+                </div>
+                <div class="field">
+                  <label for="state">State</label>
+                  <input id="state" name="state" [(ngModel)]="formState" required />
+                </div>
+              </div>
+
+              <div class="field-row">
+                <div class="field">
+                  <label for="pincode">Pincode</label>
+                  <input id="pincode" name="pincode" [(ngModel)]="formPincode" placeholder="6-digit pincode" required />
+                </div>
+                <div class="field">
+                  <label for="type">Type</label>
+                  <select id="type" name="type" [(ngModel)]="formType">
+                    <option value="Home">Home</option>
+                    <option value="Work">Work</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+              </div>
+
+              @if (formError()) { <p class="error-text">{{ formError() }}</p> }
+
+              <div class="form-actions">
+                @if (addresses().length > 0) {
+                  <button type="button" class="btn-outline" (click)="cancelAddressForm()">Cancel</button>
+                }
+                <button type="submit" class="btn">Save address</button>
+              </div>
+            </form>
+          }
+        } @else {
+          @if (selectedAddress(); as addr) {
+            <div class="address-summary">
+              <strong>{{ addr.fullName }}</strong> ({{ addr.type }})<br />
+              {{ addr.line1 }}{{ addr.line2 ? ', ' + addr.line2 : '' }}<br />
+              {{ addr.city }}, {{ addr.state }} - {{ addr.pincode }}<br />
+              Phone: {{ addr.phone }}
+            </div>
+          }
+        }
+      </section>
+
+      <!-- STEP 2: Payment -->
+      @if (step() === 'payment') {
+        <section class="card step-card">
+          <h2>2. Payment Method</h2>
+
+          <div class="payment-options">
+            <label class="payment-card" [class.selected]="paymentMethod() === 'UPI'">
+              <input type="radio" name="payment" (change)="selectPayment('UPI')" />
+              <span class="payment-label">UPI</span>
+              <span class="payment-desc">Google Pay, PhonePe, Paytm &amp; more</span>
+            </label>
+
+            <label class="payment-card" [class.selected]="paymentMethod() === 'CARD'">
+              <input type="radio" name="payment" (change)="selectPayment('CARD')" />
+              <span class="payment-label">Credit / Debit Card</span>
+              <span class="payment-desc">Visa, Mastercard, RuPay</span>
+            </label>
+
+            <label class="payment-card" [class.selected]="paymentMethod() === 'COD'">
+              <input type="radio" name="payment" (change)="selectPayment('COD')" />
+              <span class="payment-label">Cash on Delivery</span>
+              <span class="payment-desc">Pay when your order arrives</span>
+            </label>
+          </div>
+
+          @if (placeOrderError()) { <p class="error-text">{{ placeOrderError() }}</p> }
+
+          <button
+            type="button"
+            class="btn place-order-btn"
+            [disabled]="!paymentMethod() || placingOrder()"
+            (click)="placeOrder()"
+          >
+            {{ placingOrder() ? 'Placing order…' : 'Place Order' }}
+          </button>
+        </section>
+      }
+    </div>
+
+    <aside class="checkout-summary card">
+      <h3>Order Summary</h3>
+      @for (line of cart.items(); track line.product.id) {
+        <div class="summary-line">
+          <span>{{ line.product.name }} &times; {{ line.quantity }}</span>
+          <span>&#8377;{{ line.product.price * line.quantity }}</span>
+        </div>
+      }
+      <div class="summary-total">
+        <span>Total</span>
+        <span>&#8377;{{ cart.subtotal() }}</span>
+      </div>
+    </aside>
+  </div>
+</div>

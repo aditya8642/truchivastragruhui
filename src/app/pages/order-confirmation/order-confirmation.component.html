@@ -1,0 +1,56 @@
+<div class="container confirmation-page">
+  @if (order(); as o) {
+    <div class="confirmation-card card">
+      <div class="success-icon">&#10003;</div>
+      <span class="eyebrow">Order placed</span>
+      <h1>Thank you!</h1>
+      <p class="order-id">Order ID: <strong>#{{ o.orderId }}</strong></p>
+
+      @if (!o.backendConfirmed) {
+        <p class="sync-note">
+          Your order is confirmed on this device. It'll sync automatically once
+          our order system finishes connecting on the backend.
+        </p>
+      }
+
+      <div class="order-details">
+        <div class="detail-block">
+          <h3>Items</h3>
+          @for (item of o.items; track item.productId) {
+            <div class="detail-line">
+              <span>{{ item.name }} &times; {{ item.quantity }}</span>
+              <span>&#8377;{{ item.price * item.quantity }}</span>
+            </div>
+          }
+          <div class="detail-line total-line">
+            <span>Total</span>
+            <span>&#8377;{{ o.totalAmount }}</span>
+          </div>
+        </div>
+
+        <div class="detail-block">
+          <h3>Delivery Address</h3>
+          <p>
+            {{ o.address.fullName }}<br />
+            {{ o.address.line1 }}{{ o.address.line2 ? ', ' + o.address.line2 : '' }}<br />
+            {{ o.address.city }}, {{ o.address.state }} - {{ o.address.pincode }}<br />
+            Phone: {{ o.address.phone }}
+          </p>
+        </div>
+
+        <div class="detail-block">
+          <h3>Payment Method</h3>
+          <p>{{ paymentLabel(o.paymentMethod) }}</p>
+        </div>
+      </div>
+
+      <a routerLink="/products" class="btn continue-btn">Continue shopping</a>
+    </div>
+  } @else {
+    <div class="confirmation-card card">
+      <h1>Order not found</h1>
+      <p>We couldn't find that order on this device.</p>
+      <a routerLink="/products" class="btn continue-btn">Continue shopping</a>
+    </div>
+  }
+</div>
