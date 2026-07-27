@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
@@ -21,7 +21,8 @@ export class NavbarComponent implements OnInit {
     public auth: AuthService,
     public cart: CartService,
     private categoryService: CategoryService,
-    private router: Router
+    private router: Router,
+    private elementRef: ElementRef
   ) {}
 
   ngOnInit(): void {
@@ -38,11 +39,25 @@ export class NavbarComponent implements OnInit {
   }
 
   toggleDropdown(event?: Event): void {
-    if (event) { event.stopPropagation(); }
+    event?.stopPropagation();
     this.dropdownOpen.update(v => !v);
   }
 
   closeDropdown(): void {
     this.dropdownOpen.set(false);
+  }
+
+  // Click-outside-to-close: far more reliable than mouseleave, and works
+  // the same way on touch devices where "hover" doesn't really exist.
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    if (!this.elementRef.nativeElement.contains(event.target)) {
+      this.closeDropdown();
+    }
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscape(): void {
+    this.closeDropdown();
   }
 }

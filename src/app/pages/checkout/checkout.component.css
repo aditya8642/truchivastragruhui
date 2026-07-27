@@ -108,12 +108,23 @@
   cursor: pointer;
   position: relative;
   padding-left: calc(var(--space-4) + 26px);
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
 }
 
 .payment-card input[type="radio"] {
   position: absolute;
   left: var(--space-4);
   top: var(--space-4);
+  /* Override the global input:focus rule (2px outline on ALL inputs) which,
+     on a radio this small inside a full-width label, reads as if the whole
+     row is being highlighted rather than just the control itself. */
+  outline: none;
+}
+
+.payment-card input[type="radio"]:focus-visible {
+  outline: 2px solid var(--color-oxblood);
+  outline-offset: 2px;
 }
 
 .payment-card.selected { border-color: var(--color-oxblood); }

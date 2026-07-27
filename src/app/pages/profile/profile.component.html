@@ -1,0 +1,10 @@
+<section class="profile-page">
+  <div class="profile-card">
+    <h1>Your Profile</h1>
+    <p class="profile-label">Logged in as</p>
+    <p class="profile-value">{{ auth.displayName() }}</p>
+    <p class="profile-label">Email</p>
+    <p class="profile-value">{{ auth.currentUser()?.email || 'Not available' }}</p>
+    <a routerLink="/orders" class="btn-outline">View Orders</a>
+  </div>
+</section>

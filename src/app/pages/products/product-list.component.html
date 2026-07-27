@@ -16,9 +16,9 @@
       <div class="product-grid">
         @for (product of page()!.content; track product.id) {
           <div class="product-card card">
-            <a [routerLink]="['/products', product.id]" class="product-image-link">
-              <img [src]="primaryImage(product)" [alt]="product.name" class="product-image" />
-            </a>
+            <div class="product-image-link" (click)="goToProduct(product.id)" role="link" tabindex="0" (keydown.enter)="goToProduct(product.id)">
+              <app-product-image-carousel [images]="productImages(product)" [alt]="product.name"></app-product-image-carousel>
+            </div>
             <div class="product-info">
               <span class="product-category">{{ product.category.name }}</span>
               <a [routerLink]="['/products', product.id]" class="product-name">{{ product.name }}</a>

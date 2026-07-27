@@ -6,7 +6,7 @@
 
     <nav class="nav-links">
       <a routerLink="/products" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">All</a>
-      @for (category of categories(); track category.id) {
+      <ng-container *ngFor="let category of categories()">
         <a
           [routerLink]="['/products']"
           [queryParams]="{ category: category.id }"
@@ -14,38 +14,35 @@
         >
           {{ category.name }}
         </a>
-      }
+      </ng-container>
     </nav>
 
     <div class="nav-actions">
-      @if (auth.currentUser(); as user) {
+      <ng-container *ngIf="auth.currentUser() as user">
         <div class="user-area">
-          <a routerLink="/orders" class="btn-outline">My orders</a>
+          <div class="user-greeting" aria-live="polite">
+            <div class="avatar-wrapper" tabindex="0" (click)="toggleDropdown($event)" (keydown.enter)="toggleDropdown($event)">
+              <span class="avatar" title="{{ auth.displayName() }}" aria-hidden="true">{{ auth.displayName() | slice:0:1 | uppercase }}</span>
+              <div class="avatar-caret" aria-hidden="true">▾</div>
 
-            <div class="user-greeting" aria-live="polite">
-              <div class="avatar-wrapper" (click)="toggleDropdown($event)" tabindex="0" (blur)="closeDropdown()">
-                <span class="avatar" title="{{ auth.displayName() }}" aria-hidden="true">{{ auth.displayName() | slice:0:1 | uppercase }}</span>
-                <div class="avatar-caret" aria-hidden="true">▾</div>
-
-                <div class="avatar-dropdown" [class.open]="dropdownOpen()" role="menu" *if="dropdownOpen()">
-                  <a class="dropdown-item" routerLink="/profile" (click)="closeDropdown()">Profile</a>
-                  <a class="dropdown-item" routerLink="/orders" (click)="closeDropdown()">Orders</a>
-                  <button class="dropdown-item" (click)="logout()">Logout</button>
-                </div>
+              <div class="avatar-dropdown" *ngIf="dropdownOpen()" role="menu">
+                <a class="dropdown-item" routerLink="/account" (click)="closeDropdown()">Profile</a>
+                <a class="dropdown-item" routerLink="/orders" (click)="closeDropdown()">Orders</a>
+                <button type="button" class="dropdown-item" (click)="logout()">Logout</button>
               </div>
             </div>
-
-          <button class="btn-outline logout-btn" (click)="logout()">Log out</button>
+          </div>
         </div>
-      } @else {
+      </ng-container>
+      <ng-container *ngIf="!auth.currentUser()">
         <a routerLink="/login" class="btn-outline">Log in</a>
-      }
+      </ng-container>
 
       <a routerLink="/cart" class="cart-link">
         Cart
-        @if (cart.itemCount() > 0) {
+        <ng-container *ngIf="cart.itemCount() > 0">
           <span class="cart-count">{{ cart.itemCount() }}</span>
-        }
+        </ng-container>
       </a>
     </div>
   </div>

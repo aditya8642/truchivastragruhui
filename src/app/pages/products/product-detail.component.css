@@ -1,12 +1,13 @@
 .detail-page {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(260px, 380px) 1fr;
   gap: var(--space-7);
   padding: var(--space-6) var(--space-5) var(--space-8);
 }
 
 .main-image {
-  width: min(100%, 520px);
+  width: 100%;
+  max-width: 380px;
   aspect-ratio: 4/5;
   object-fit: cover;
   background: var(--color-line);
@@ -39,4 +40,23 @@
 
 @media (max-width: 720px) {
   .detail-page { grid-template-columns: 1fr; }
+}
+
+.description-box {
+  margin: 0 0 var(--space-8);
+  padding: var(--space-5) var(--space-6);
+}
+
+.description-box h3 {
+  font-size: 0.95rem;
+  margin-bottom: var(--space-2);
+}
+
+.description-box h3:not(:first-child) {
+  margin-top: var(--space-5);
+}
+
+.description-box p {
+  font-size: 0.9rem;
+  line-height: 1.6;
 }

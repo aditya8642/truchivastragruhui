@@ -1,6 +1,6 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, ActivatedRoute } from '@angular/router';
+import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ProductService } from '../../core/services/product.service';
 import { CategoryService } from '../../core/services/category.service';
@@ -8,11 +8,12 @@ import { CartService } from '../../core/services/cart.service';
 import { Product, getProductImageUrls } from '../../core/models/product.model';
 import { Category } from '../../core/models/category.model';
 import { Page } from '../../core/models/api-response.model';
+import { ProductImageCarouselComponent } from '../../shared/product-image-carousel/product-image-carousel.component';
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule],
+  imports: [CommonModule, RouterLink, FormsModule, ProductImageCarouselComponent],
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.css'
 })
@@ -28,6 +29,7 @@ export class ProductListComponent implements OnInit {
     private productService: ProductService,
     private categoryService: CategoryService,
     private route: ActivatedRoute,
+    private router: Router,
     public cart: CartService
   ) {}
 
@@ -77,5 +79,13 @@ export class ProductListComponent implements OnInit {
   primaryImage(product: Product): string {
     const urls = getProductImageUrls(product);
     return urls[0];
+  }
+
+  productImages(product: Product): string[] {
+    return getProductImageUrls(product);
+  }
+
+  goToProduct(id: number): void {
+    this.router.navigate(['/products', id]);
   }
 }

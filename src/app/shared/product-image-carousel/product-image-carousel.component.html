@@ -1,0 +1,16 @@
+  <div class="carousel" (mouseenter)="pause()" (mouseleave)="resume()">
+  <img [src]="images[activeIndex()]" [alt]="alt" class="carousel-image" />
+
+  <ng-container *ngIf="images.length > 1">
+    <div class="carousel-dots">
+      <button
+        *ngFor="let img of images; let i = index"
+        type="button"
+        class="dot"
+        [class.active]="i === activeIndex()"
+        (click)="select(i, $event)"
+        [attr.aria-label]="'Show image ' + (i + 1) + ' of ' + images.length"
+      ></button>
+    </div>
+  </ng-container>
+</div>
